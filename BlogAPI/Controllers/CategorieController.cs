@@ -42,6 +42,7 @@ namespace BlogAPI.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCategorie(long id, Categorie categorie)
         {
+            var codeRetour = "200";
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -50,6 +51,12 @@ namespace BlogAPI.Controllers
             if (id != categorie.CategorieID)
             {
                 return BadRequest();
+            }
+
+            if (TitreExists(categorie))
+            {
+                codeRetour = "400";
+                return Ok(new { codeRetour = codeRetour });
             }
 
             db.Entry(categorie).State = EntityState.Modified;
@@ -69,14 +76,17 @@ namespace BlogAPI.Controllers
                     throw;
                 }
             }
+            return Ok(new { id = categorie.CategorieID, codeRetour = codeRetour });
 
-            return StatusCode(HttpStatusCode.NoContent);
+            // return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Categorie
         [ResponseType(typeof(Categorie))]
         public IHttpActionResult PostCategorie(Categorie categorie)
         {
+            var codeRetour = "400";
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -85,7 +95,7 @@ namespace BlogAPI.Controllers
             db.Categories.Add(categorie);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = categorie.CategorieID }, categorie);
+            return Ok(new { id = categorie.CategorieID, codeRetour = codeRetour });
         }
 
         // DELETE: api/Categorie/5
@@ -111,6 +121,13 @@ namespace BlogAPI.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool TitreExists(Categorie categorie)
+        {
+            var categories = db.Categories;
+            var resultat = db.Categories.Count(e => e.CategorieID != categorie.CategorieID && e.Titre == categorie.Titre) > 0;
+            return db.Categories.Count(e => e.CategorieID != categorie.CategorieID && e.Titre == categorie.Titre) > 0;
         }
 
         private bool CategorieExists(long id)
