@@ -15,6 +15,12 @@ import { BlogComponent } from "./blog/blog.component";
 import { PublicationsComponent } from "./publications/publications.component";
 import { PublicationComponent } from "./publications/publication/publication.component";
 import { CategorieService } from "./shared/categorie.service";
+import {
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatNativeDateModule,
+} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -33,6 +39,10 @@ import { CategorieService } from "./shared/categorie.service";
     MatDialogModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   entryComponents: [],
   providers: [CategorieService],

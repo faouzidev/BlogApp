@@ -49,12 +49,17 @@
         <label>Date de publication</label>
         <div class="input-group">
           <input
-            type="”date”"
             name="DatePublication"
             #DatePublication="ngModel"
             [(ngModel)]="service.formData.DatePublication"
-            class="form-control"
+            matInput
+            [matDatepicker]="picker"
           />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </div>
       </div>
     </div>
