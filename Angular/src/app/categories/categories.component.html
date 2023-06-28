@@ -3,7 +3,7 @@
     <th>#Catégorie No.</th>
     <th>Titre</th>
     <th>
-      <a class="btn btn-outline-success" routerLink="/order"
+      <a class="btn btn-outline-success" routerLink="/categorie"
         ><i class="fa fa-plus-square"></i> Create New</a
       >
     </th>
@@ -12,11 +12,7 @@
     <tr *ngFor="let item of categorieList">
       <th (click)="openForEdit(item.CategorieID)">{{ item.CategorieID }}</th>
       <td (click)="openForEdit(item.CategorieID)">{{ item.Titre }}</td>
-      <td>
-        <a class="btn text-danger" (click)="onOrderDelete(item.OrderID)"
-          ><i class="fa fa-trash fa-lg"></i
-        ></a>
-      </td>
+      <td></td>
     </tr>
   </tbody>
 </table>

@@ -1,23 +1,16 @@
-import { CustomerService } from "./../../shared/customer.service";
-import { OrderService } from "./../../shared/order.service";
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { OrderItemsComponent } from "../order-items/order-items.component";
-import { Customer } from "src/app/shared/customer.model";
 import { ToastrService } from "ngx-toastr";
 import { Router, ActivatedRoute } from "@angular/router";
 import { CategorieService } from "src/app/shared/categorie.service";
 import { RetourApi } from "src/app/shared/retourApi.model";
-import { log } from "console";
-
 @Component({
-  selector: "app-order",
-  templateUrl: "./order.component.html",
+  selector: "app-categorie",
+  templateUrl: "./categorie.component.html",
   styles: [],
 })
-export class OrderComponent implements OnInit {
-  customerList: Customer[];
+export class CategorieComponent implements OnInit {
   isValid: boolean = true;
   retour: RetourApi;
   constructor(
@@ -56,15 +49,13 @@ export class OrderComponent implements OnInit {
     if (this.validateForm()) {
       this.service.saveOrUpdateCategorieV02().then((res) => {
         this.retour = res as RetourApi;
-        console.log("this.retour ; ", this.retour);
         if (this.retour.codeRetour == "400") {
-          console.log("this.retour.code ; ", this.retour.codeRetour);
           this.toastr.error("Categorie existe déja", "Blog App.");
           return;
         }
         this.resetForm();
         this.toastr.success("Submitted Successfully", "Blog App.");
-        this.router.navigate(["/categories"]);
+        this.router.navigate(["/blog"]);
       });
     }
   }

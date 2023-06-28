@@ -9,17 +9,21 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { HttpClientModule } from "@angular/common/http";
 import { ToastrModule } from "ngx-toastr";
 
-import { CategoriesComponent } from "./orders/categories.component";
-import { OrderComponent } from "./orders/order/order.component";
-import { OrderItemsComponent } from "./orders/order-items/order-items.component";
-import { OrderService } from "./shared/order.service";
+import { CategoriesComponent } from "./categories/categories.component";
+import { CategorieComponent } from "./categories/categorie/categorie.component";
+import { BlogComponent } from "./blog/blog.component";
+import { PublicationsComponent } from "./publications/publications.component";
+import { PublicationComponent } from "./publications/publication/publication.component";
+import { CategorieService } from "./shared/categorie.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoriesComponent,
-    OrderComponent,
-    OrderItemsComponent,
+    CategorieComponent,
+    BlogComponent,
+    PublicationsComponent,
+    PublicationComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,8 +34,8 @@ import { OrderService } from "./shared/order.service";
     HttpClientModule,
     ToastrModule.forRoot(),
   ],
-  entryComponents: [OrderItemsComponent],
-  providers: [OrderService],
+  entryComponents: [],
+  providers: [CategorieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

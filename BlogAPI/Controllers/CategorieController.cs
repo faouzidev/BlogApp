@@ -85,14 +85,19 @@ namespace BlogAPI.Controllers
         [ResponseType(typeof(Categorie))]
         public IHttpActionResult PostCategorie(Categorie categorie)
         {
-            var codeRetour = "400";
+            var codeRetour = "200";
 
-            if (!ModelState.IsValid)
+            if (TitreExists(categorie))
             {
-                return BadRequest(ModelState);
+                codeRetour = "400";
+                return Ok(new { codeRetour = codeRetour });
             }
 
-            db.Categories.Add(categorie);
+            //Order table
+            if (categorie.CategorieID == 0)
+                db.Categories.Add(categorie);
+            else
+                db.Entry(categorie).State = EntityState.Modified;
             db.SaveChanges();
 
             return Ok(new { id = categorie.CategorieID, codeRetour = codeRetour });

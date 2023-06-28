@@ -20,7 +20,7 @@ namespace BlogAPI.Models
             this.Publications = new HashSet<Publication>();
         }
     
-        public long? CategorieID { get; set; }
+        public long CategorieID { get; set; }
         public string Titre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,16 +1,26 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { CategoriesComponent } from "./orders/categories.component";
-import { OrderComponent } from "./orders/order/order.component";
+import { CategoriesComponent } from "./categories/categories.component";
+import { CategorieComponent } from "./categories/categorie/categorie.component";
+import { BlogComponent } from "./blog/blog.component";
+import { PublicationComponent } from "./publications/publication/publication.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "categories", pathMatch: "full" },
+  { path: "", redirectTo: "blog", pathMatch: "full" },
+  { path: "blog", component: BlogComponent },
   { path: "categories", component: CategoriesComponent },
   {
-    path: "order",
+    path: "categorie",
     children: [
-      { path: "", component: OrderComponent },
-      { path: "edit/:id", component: OrderComponent },
+      { path: "", component: CategorieComponent },
+      { path: "edit/:id", component: CategorieComponent },
+    ],
+  },
+  {
+    path: "publication",
+    children: [
+      { path: "", component: PublicationComponent },
+      { path: "edit/:id", component: PublicationComponent },
     ],
   },
 ];

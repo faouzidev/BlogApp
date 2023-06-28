@@ -7,11 +7,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using BlogAPI.Models;
 
 namespace BlogAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PublicationController : ApiController
     {
         private BDModel db = new BDModel();
@@ -74,12 +76,22 @@ namespace BlogAPI.Controllers
         [ResponseType(typeof(Publication))]
         public IHttpActionResult PostPublication(Publication publication)
         {
-            if (!ModelState.IsValid)
+            var codeRetour = "200";
+
+            if (TitreExists(publication))
             {
-                return BadRequest(ModelState);
+                codeRetour = "400";
+                return Ok(new { codeRetour = codeRetour });
             }
 
-            db.Publications.Add(publication);
+            if (publication.PublicationID == 0)
+                db.Publications.Add(publication);
+            else  {
+                var categorie = db.Categories.Where(l => l.CategorieID == publication.CategorieID).Single();
+                publication.Categorie = categorie;
+
+                db.Entry(publication).State = EntityState.Modified;
+                }
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = publication.PublicationID }, publication);
@@ -108,6 +120,12 @@ namespace BlogAPI.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        private bool TitreExists(Publication publication)
+        {
+            var publications = db.Publications;
+            var resultat = db.Publications.Count(e => e.PublicationID != publication.CategorieID && e.Titre == publication.Titre) > 0;
+            return db.Publications.Count(e => e.PublicationID != publication.PublicationID && e.Titre == publication.Titre) > 0;
         }
 
         private bool PublicationExists(long id)
